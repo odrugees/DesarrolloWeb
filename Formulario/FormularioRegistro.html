@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="estilos.css">
+    <script src="validaciones.js"></script>
+    <title>Formulario Registro</title>
+  </head>
+  <body>
+    <section class="formulario">
+      <h4>Formulario de Registro</h4>
+      <form name="fomularioRegistro">
+        <label for="">Nombre</label>
+        <input class="camposFormulario" type="text" name="nombre"  id="nombre" autofocus >
+        <label for="">Correo electrónico</label>
+        <input class="camposFormulario" type="email" name="correo" id="correo" required >
+        <label for="">Facebook profile (URL),</label>
+        <input class="camposFormulario" type="url" name="facebook" id="facebook" placeholder="Escribe la URL de perfil de facebook" >
+        <label for="">Fecha de nacimiento</label>
+        <input class="camposFormulario" type="date" name="fechaNacimiento" id="fechaNacimiento">
+        <label for="">Fecha y hora de registro</label>
+        <input class="camposFormulario" type="datetime-local" name="fechaHoraRegistro" id="fechaHoraRegistro">
+        <label for="">Número de documento</label>
+        <input class="camposFormulario" type="number"  maxlength="8" name="numeroDocumento" id="numeroDocumento">
+        <label for="">Edad</label>
+        <input class="camposFormulario" type="number" name="edad" id="edad" min="1" max="100">
+        <label for="">Color favorito</label>
+        <input class="camposFormulario" type="color" name="color" id="color">
+        <input class="bontones" type="submit" value="Registrar" onclick="valida_envia()">
+      </form>
+    </section>
+  </body>
+</html>
