@@ -1,0 +1,11 @@
+{
+  "name": "taller-4",
+  "version": "1.0.0",
+  "description": "Taller 4",
+  "main": "app.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
