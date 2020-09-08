@@ -13,7 +13,7 @@ appServer.listen (appPort, ()=>{
 /************ Variables de almacenamiento de notas ************/
 
 const user = require ('./user');
-var users = new Array(user);
+var users = new Array();
 
 /************ Mensajes estándar de la API ************/
 const mensajeErroneo = {mensaje:"Petición no válida"};
