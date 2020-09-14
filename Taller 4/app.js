@@ -43,6 +43,7 @@ appServer.post ('/adduser' , (req, res)=>{
  /*Eliminar un usuario por id enviado como parámetro*/
 appServer.put ('/deleteuserid/:idUser' , (req, res)=>{
   var index = 0;
+
   users.forEach(function(user) {
     index = index+1
     if (user.id === req.params.idUser) {
@@ -56,26 +57,29 @@ appServer.put ('/deleteuserid/:idUser' , (req, res)=>{
 
 /*Traer un usuario por id enviado como parámetro*/
 appServer.put ('/getuserid/:idUser' , (req, res)=>{
- users.forEach(function(user) {
+res.send(users.filter(users =>users.id == req.params.idUser))
+/* users.forEach(function(user) {
    if (user.id === req.params.idUser) {
        res.send (user);
    }
    })
-   res.send (mensajeNoEncontrado);
+   res.send (mensajeNoEncontrado);*/
  });
  /*Traer un usuario por nombre enviado como parámetro*/
  appServer.put ('/getusername/:nameUser' , (req, res)=>{
-  users.forEach(function(user) {
+   res.send(users.filter(users =>users.nombre < req.params.nameUser))
+  /*users.forEach(function(user) {
     if (user.nombre === req.params.nameUser) {
         res.send (user);
     }
     })
-    res.send (mensajeNoEncontrado);
+    res.send (mensajeNoEncontrado);*/
   });
 
   /*Traer todos los usuarios menores a una edad enviada como parámetro*/
   appServer.put ('/getuserage/:ageUser' , (req, res)=>{
-    var listUsers = new Array();
+    res.send(users.filter(users =>users.edad < req.params.ageUser))
+    /*var listUsers = new Array();
     var  encuentraUsuario = false;
    users.forEach(function(user) {
      if (user.edad < req.params.ageUser) {
@@ -87,5 +91,5 @@ appServer.put ('/getuserid/:idUser' , (req, res)=>{
         res.send (listUsers);
      }else{
      res.send (mensajeNoEncontrado);
-   }
+   }*/
    });
