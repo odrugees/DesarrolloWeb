@@ -1,14 +1,18 @@
-module.exports = (sequelize, Sequelize) =>{
-    const Post = sequelize.define ("Post", {
+module.exports = (sequelize, DataTypes) =>{
+    const Post = sequelize.define (
+      "Post", {
         idPost: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        message: Sequelize.STRING,
-        published_date: Sequelize.DATE,
-    }, {
-        tableName: "posts"
-    });
+        message: {
+          type: DataTypes.STRING
+        },
+        published_date: {
+          type: DataTypes.DATE
+        }
+      }
+    );
     return Post;
-}
+};

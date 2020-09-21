@@ -1,18 +1,19 @@
-module.exports = (sequelize, Sequelize) =>{
-    const User = sequelize.define ("User", {
+module.exports = (sequelize, DataTypes) =>{
+    const User = sequelize.define (
+      'User', {
         idUser: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+          autoIncrement: true
         },
         username: {
-            type: Sequelize.STRING,
-            unique: true
+          type: DataTypes.STRING,
+          unique: true
         },
-        creation_date: Sequelize.DATE,
-    }, {
-        tableName: "users"
-    });
-
+        creation_date: {
+          type: DataTypes.DATE
+        }
+      }
+    );
     return User;
-}
+};

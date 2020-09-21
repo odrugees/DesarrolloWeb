@@ -1,10 +1,11 @@
 const dbManager = require ('../database/db.manager');
 
 /**
- * Crear Usuario
- * @param {*} userObject JSON Object with User information
+ * Crear Post
+ * @param {*} postObject JSON Object with Post information
  */
-async function crearUsuario (req, res) {
+async function crearPost (req, res) {
+
     // Validar parametros
     if (!req.body) {
         res.status(400).send({
@@ -14,13 +15,13 @@ async function crearUsuario (req, res) {
     }
 
     // Crear objeto
-    const newUserObject = {
-        username: req.body.username,
-        creation_date: req.body.creation_date
+    const newPostObject = {
+        message: req.body.message,
+        published_date: req.body.published_date,
+        idUser:req.body.idUser
     }
-
     //Ejecucion metodo
-    dbManager.User.create(newUserObject).then (
+    dbManager.Post.create(newPostObject).then (
         data => {
             res.send (data);
         }
@@ -33,16 +34,17 @@ async function crearUsuario (req, res) {
         }
     );
 }
+
 /**
- * Retonar todos los Usuario
+ * Retonar todos los Post
  */
-async function retornarUsuarios (req, res){
+async function retonarPosts (req, res){
     try {
         //Ejecucion metodo
-        const users = await dbManager.User.findAll ();
+        const posts = await dbManager.Post.findAll();
 
         res.json({
-                data: users
+          data: posts
         });
 
     } catch (e) {
@@ -52,21 +54,20 @@ async function retornarUsuarios (req, res){
         });
     }
 }
-
 /**
- * Retonar Usuario por Id
+ * Retonar Post por Id
  */
-async function retonarUsuario (req, res){
+async function retonarPost (req, res){
     try {
-        const { idUser } = req.params;
+        const { idPost } = req.params;
 
         //Ejecucion metodo
-        const user = await dbManager.User.findOne({
+        const post = await dbManager.Post.findOne({
             where: {
-                idUser: idUser
+                idPost: idPost
             }
         });
-        res.json(user);
+        res.json(post);
 
     } catch (e) {
         console.log(e);
@@ -76,9 +77,9 @@ async function retonarUsuario (req, res){
     }
 }
 /**
- * Actualizar Usuario por Id
+ * Actualizar Post por Id
  */
-async function actualizarUsuario (req, res){
+async function actualizarPost (req, res){
   // Validar parametros
   if (!req.body) {
       res.status(400).send({
@@ -87,25 +88,26 @@ async function actualizarUsuario (req, res){
       return;
   }
   try {
-      const { idUser } = req.params;
+      const { idPost } = req.params;
 
       //Ejecucion metodo
-      const resultado = await dbManager.User.update({
-         username: req.body.username,
-         creation_date: req.body.creation_date
+      const resultado = await dbManager.Post.update({
+         message: req.body.message,
+         published_date: req.body.published_date,
+         idUser: req.body.idUser
        },{
-         where: {idUser: idUser}
+         where: {idPost: idPost}
        })
       if(resultado==1)
         {res.status(200).json({
-          message: "Usuario Actulizado"
+          message: "Post Actulizado"
           });
         };
         if(resultado!=1)
         {res.json({
-            message: "El Usuario no existe en el sistema"
+        message: "El Post no existe en el sistema"
         });
-        };
+      };
   } catch (e) {
       console.log(e);
       res.status(500).send({
@@ -115,25 +117,26 @@ async function actualizarUsuario (req, res){
 }
 
 /**
- * Eliminar Usuario por Nombre
+ * Eliminar Post por Id
  */
-async function eliminarUsuario (req, res){
+async function eliminarPost (req, res){
   try {
-      const { username } = req.params;
+      const { idPost } = req.params;
 
       //Ejecucion metodo
-      const resultado = await dbManager.User.destroy({
-         where: {username: username}
+      const resultado = await dbManager.Post.destroy({
+         where: {idPost: idPost}
        })
+
       if(resultado==1)
         {res.status(200).json({
-          message: "Usuario Eliminado"
+          message: "Post Eliminado"
           });
         };
-      if(resultado==0)
+      if(resultado!=1)
         {res.json({
           message: "El Post no existe en el sistema"
-        });
+          });
         };
   } catch (e) {
       console.log(e);
@@ -144,60 +147,64 @@ async function eliminarUsuario (req, res){
 }
 
 /**
- * Eliminar todos los Usuarios
+ * Eliminar todos los Post
  */
-async function eliminarUsuarios (req, res){
+async function eliminarPosts (req, res){
   try {
       //Ejecucion metodo
-      const resultado = await dbManager.User.destroy({
+      const resultado = await dbManager.Post.destroy({
          where: {}
        })
+
        if(resultado>=1)
          {res.status(200).json({
-           message: "Usuarios Eliminados"
+           message: "Posts Eliminados"
            });
          };
        if(resultado==0)
          {res.json({
-           message: "No exiten Usuarios en el sistema"
+           message: "No exiten Post en el sistema"
            });
          };
   } catch (e) {
       console.log(e);
+
       res.status(500).send({
           message: "Ocurrió un error"
       });
   }
 }
-
 /**
- * Reronar todos los Usuario por fecha
+ * Reronar todos los Post por fecha
  * Ejemeplo parametro: AAAA-MM-DDT00:00:00.000Z
  */
-async function retonarUsuariosFecha (req, res){
+async function retonarPostFecha (req, res){
   try {
 
-      const { creation_date } = req.params;
+      const { publishedDate } = req.params;
       //Ejecucion metodo
-      const users = await dbManager.User.findAll ({
-         where: {creation_date: creation_date}
+      const posts = await dbManager.Post.findAll ({
+         where: {published_date: publishedDate}
        });
 
       res.json({
-              data: users
+              data: posts
       });
 
   } catch (e) {
+
       console.log(e);
+      // Send error message as a response
       res.status(500).send({
           message: "Ocurrió un error"
       });
   }
 }
-exports.crearUsuario = crearUsuario;
-exports.retornarUsuarios = retornarUsuarios;
-exports.retonarUsuario = retonarUsuario;
-exports.actualizarUsuario = actualizarUsuario;
-exports.eliminarUsuario = eliminarUsuario;
-exports.eliminarUsuarios = eliminarUsuarios;
-exports.retonarUsuariosFecha = retonarUsuariosFecha;
+
+exports.crearPost = crearPost;
+exports.retonarPosts = retonarPosts;
+exports.retonarPost = retonarPost;
+exports.actualizarPost  =  actualizarPost;
+exports.eliminarPost  =  eliminarPost;
+exports.eliminarPosts  = eliminarPosts;
+exports.retonarPostFecha = retonarPostFecha;
