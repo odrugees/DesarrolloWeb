@@ -41,9 +41,7 @@ async function retornarUsuarios (req, res){
         //Ejecucion metodo
         const users = await dbManager.User.findAll ();
 
-        res.json({
-                data: users
-        });
+        res.json(users);
 
     } catch (e) {
         console.log(e);
@@ -119,11 +117,11 @@ async function actualizarUsuario (req, res){
  */
 async function eliminarUsuario (req, res){
   try {
-      const { username } = req.params;
+      const { idUser } = req.params;
 
       //Ejecucion metodo
       const resultado = await dbManager.User.destroy({
-         where: {username: username}
+         where: {idUser: idUser}
        })
       if(resultado==1)
         {res.status(200).json({
@@ -183,9 +181,7 @@ async function retonarUsuariosFecha (req, res){
          where: {creation_date: creation_date}
        });
 
-      res.json({
-              data: users
-      });
+      res.json(users);
 
   } catch (e) {
       console.log(e);

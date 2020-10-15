@@ -1,0 +1,38 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">Posts</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">Post list</h5>
+    <div class="my-2 text-letf">
+      <button class="btn btn-rounded btn-primary" type="button" [routerLink] = "['/posts/formulario']">Crear Post</button>
+    </div>
+    <div *ngIf="posts?.length==0" class="alert alert-info">
+      No existen registros en la base de datos!
+    </div>
+    <table class="table table-bordered table-striped" *ngIf="posts?.length>0">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Message</th>
+          <th>Published Date</th>
+          <th>User</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts">
+          <td>{{post.idPost}}</td>
+          <td>{{post.message}}</td>
+          <td>{{post.published_date}}</td>
+          <td>{{post.user.username}}</td>
+          <td>
+            <button type="button" name="editar" [routerLink]= "['/posts/formulario/',post.idPost]" class="btn btn-primary btn-sm">Editar</button>
+          </td>
+          <td>
+            <button type="button" name="eliminar" (click)='delete(post)' class="btn btn-danger btn-sm">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

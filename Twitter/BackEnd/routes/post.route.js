@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var cors = require('cors')
 const postController = require ('../controllers/post.controller');
-
-
+router.use(cors())
 /* POST new post listing. */
 router.post('/', postController.crearPost);
 

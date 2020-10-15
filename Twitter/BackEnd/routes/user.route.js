@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var cors = require('cors')
 const userController = require ('../controllers/user.controller');
-
+router.use(cors())
 /* POST new users listing. */
 router.post('/', userController.crearUsuario);
 /**
@@ -19,7 +20,7 @@ router.put ('/:idUser',userController.actualizarUsuario);
 /**
  * DELETE Route to delete an user by username
  */
-router.delete ('/:username',userController.eliminarUsuario);
+router.delete ('/:idUser',userController.eliminarUsuario);
 /**
  * DELETE Route to delete all users
  */

@@ -18,7 +18,7 @@ async function crearPost (req, res) {
     const newPostObject = {
         message: req.body.message,
         published_date: req.body.published_date,
-        idUser:req.body.idUser
+        idUser:req.body.user.idUser
     }
     //Ejecucion metodo
     dbManager.Post.create(newPostObject).then (
@@ -41,11 +41,11 @@ async function crearPost (req, res) {
 async function retonarPosts (req, res){
     try {
         //Ejecucion metodo
-        const posts = await dbManager.Post.findAll();
-
-        res.json({
-          data: posts
+        const posts = await dbManager.Post.findAll({
+          include: [{ model: dbManager.User, as: 'user' }]
         });
+
+        res.json(posts);
 
     } catch (e) {
         console.log(e);
@@ -63,6 +63,7 @@ async function retonarPost (req, res){
 
         //Ejecucion metodo
         const post = await dbManager.Post.findOne({
+            include: [{ model: dbManager.User, as: 'user' }],
             where: {
                 idPost: idPost
             }
@@ -94,7 +95,7 @@ async function actualizarPost (req, res){
       const resultado = await dbManager.Post.update({
          message: req.body.message,
          published_date: req.body.published_date,
-         idUser: req.body.idUser
+         idUser:req.body.user.idUser
        },{
          where: {idPost: idPost}
        })
@@ -187,9 +188,7 @@ async function retonarPostFecha (req, res){
          where: {published_date: publishedDate}
        });
 
-      res.json({
-              data: posts
-      });
+      res.json(posts);
 
   } catch (e) {
 

@@ -1,0 +1,39 @@
+<div class="card bg-dark text-white">
+  <div class="card-header">{{titulo}}</div>
+  <div class="card-body">
+    <form>
+      <div class="form-group row">
+        <label for="message" class="col-form-label col-sm-2">Message</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="post.message" name="message">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="published_date" class="col-form-label col-sm-2">Published Date</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="post.published_date" name="publishedDate">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="user" class="col-form-label col-sm-2">User</label>
+        <div class="col-sm-6">
+          <select [compareWith]="compareUser" type="text" class="form-control" [(ngModel)]="post.user" name="user" style="width:500px;">
+            <option *ngFor="let user of users" [ngValue]="user">{{user.username}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button class="btn btn-primary" role="button" (click)='crear()' *ngIf="!post.idPost else elseBlock">Crear</button>
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" role="button" (click)='modificar()'>Modificar</button>
+          </ng-template>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
